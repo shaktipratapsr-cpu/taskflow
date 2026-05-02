@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow | Modern Team Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <div class="grid-bg"></div>
+
+  <!-- Auth Screen -->
+  <div id="auth-screen" class="screen auth-page active">
+    <div class="card auth-card glass">
+      <div class="auth-header">
+        <div class="logo-icon" style="margin: 0 auto 16px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h2 id="auth-title">Welcome back</h2>
+        <p id="auth-subtitle">Manage your team tasks effectively</p>
+      </div>
+
+      <div class="nav-group flex" style="margin-bottom: 24px; background: var(--bg); padding: 4px; border-radius: 10px;">
+        <button class="nav-link active tab-btn" style="flex:1; justify-content:center" data-tab="login">Login</button>
+        <button class="nav-link tab-btn" style="flex:1; justify-content:center" data-tab="signup">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" id="login-email" class="input" placeholder="name@company.com" required>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="login-password" class="input" placeholder="••••••••" required>
+        </div>
+        <div id="login-error" class="btn-danger text-center hidden" style="padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 16px;"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%">Sign In</button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form hidden">
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" id="signup-name" class="input" placeholder="John Doe" required>
+        </div>
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" id="signup-email" class="input" placeholder="name@company.com" required>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="signup-password" class="input" placeholder="••••••••" required>
+        </div>
+        <div class="input-group">
+          <label>Role</label>
+          <select id="signup-role" class="input">
+            <option value="member">Member</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </div>
+        <div id="signup-error" class="btn-danger text-center hidden" style="padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 16px;"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Pending Screen -->
+  <div id="pending-screen" class="screen auth-page">
+    <div class="card auth-card glass text-center">
+      <div class="logo-icon" style="margin: 0 auto 24px; width: 64px; height: 64px;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h2 style="margin-bottom: 12px;">Account Pending</h2>
+      <p style="color: var(--text-muted); margin-bottom: 32px;">Your account is awaiting administrator approval. You will be able to access the platform once approved.</p>
+      <button class="btn btn-primary" style="width: 100%" onclick="location.reload()">Check Status</button>
+      <button class="btn btn-ghost mt-4" style="width: 100%" onclick="API.setToken('');location.reload()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- App Screen -->
+  <div id="app-screen" class="screen">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <span class="logo-text">TaskFlow</span>
+      </div>
+
+      <nav class="nav-group">
+        <div class="nav-label">General</div>
+        <button class="nav-link active" data-view="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button class="nav-link" data-view="projects">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+          Projects
+        </button>
+        <button class="nav-link" data-view="my-tasks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          My Tasks
+        </button>
+      </nav>
+
+      <nav id="admin-nav" class="nav-group hidden">
+        <div class="nav-label">Administration</div>
+        <button class="nav-link" data-view="team">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          Team Management
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="flex items-center gap-2" style="padding: 12px; background: var(--surface); border-radius: var(--radius-md); border: 1px solid var(--border);">
+          <div id="sidebar-avatar" class="logo-icon" style="width: 32px; height: 32px; font-size: 12px; font-weight: 700;">JD</div>
+          <div style="flex:1; overflow:hidden">
+            <div id="sidebar-name" style="font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">User Name</div>
+            <div id="sidebar-role" style="font-size: 11px; color: var(--text-muted); text-transform: capitalize;">Admin</div>
+          </div>
+          <button id="logout-btn" class="btn-ghost" style="padding: 6px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="container">
+        <!-- Dashboard -->
+        <div id="view-dashboard" class="view active">
+          <header class="header">
+            <div class="header-info">
+              <h1>Dashboard Overview</h1>
+              <p>Welcome back, <span id="dash-name" style="color: white; font-weight: 600;">User</span>. Here's what's happening today.</p>
+            </div>
+          </header>
+
+          <div class="stats-row">
+            <div class="card stat-card" onclick="navigate('projects'); loadProjects();" style="cursor: pointer">
+              <div class="stat-icon" style="color: var(--primary)">📂</div>
+              <div class="stat-info">
+                <span id="stat-projects" class="value">0</span>
+                <span class="label">Total Projects</span>
+              </div>
+            </div>
+            <div class="card stat-card" onclick="navigate('my-tasks'); loadMyTasks();" style="cursor: pointer">
+              <div class="stat-icon" style="color: var(--warning)">⚡</div>
+              <div class="stat-info">
+                <span id="stat-total" class="value">0</span>
+                <span class="label">Total Tasks</span>
+              </div>
+            </div>
+            <div class="card stat-card" onclick="navigate('my-tasks'); loadMyTasks();" style="cursor: pointer">
+              <div class="stat-icon" style="color: var(--success)">✅</div>
+              <div class="stat-info">
+                <span id="stat-completed" class="value">0</span>
+                <span class="label">Completed</span>
+              </div>
+            </div>
+            <div class="card stat-card" id="overdue-card" style="cursor: pointer">
+              <div class="stat-icon" style="color: var(--danger)">🔥</div>
+              <div class="stat-info">
+                <span id="stat-overdue" class="value">0</span>
+                <span class="label">Overdue</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid" style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 24px;">
+            <div class="flex flex-col gap-6">
+              <!-- Task Distribution -->
+              <div class="card" style="padding: 24px;">
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px;">📈 Task Distribution</h3>
+                <div id="status-cards-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
+                  <!-- Dynamically filled by app.js -->
+                </div>
+              </div>
+              
+              <!-- Overdue Section -->
+              <div id="overdue-section" class="card" style="padding: 24px;">
+                <div class="flex justify-between items-center" style="margin-bottom: 20px;">
+                  <h3 style="font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: var(--red)">⚠️</span> Overdue Tasks
+                  </h3>
+                  <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Action required</span>
+                </div>
+                <div id="overdue-list" class="flex flex-col gap-1"></div>
+              </div>
+            </div>
+            <div class="card">
+              <h3 style="margin-bottom: 20px; font-size: 16px; font-weight: 700;">Recent Activity</h3>
+              <div id="recent-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div id="view-projects" class="view">
+          <header class="header">
+            <div class="header-info">
+              <h1>Projects</h1>
+              <p>Collaborate with your team on projects</p>
+            </div>
+            <button id="new-project-btn" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New Project
+            </button>
+          </header>
+          <div id="projects-grid" class="project-grid"></div>
+        </div>
+
+        <!-- Project Detail -->
+        <div id="view-project-detail" class="view">
+          <header class="header" style="margin-bottom: 24px;">
+            <div id="project-detail-header" style="flex:1; display:flex; flex-direction:column">
+              <a id="back-to-projects" class="back-link">← Back to Projects</a>
+              <div id="project-detail-info">
+                <h1 class="project-detail-name">Project Name</h1>
+                <p class="project-detail-desc">Description goes here</p>
+              </div>
+            </div>
+            <div id="project-actions" class="flex flex-col items-end gap-2">
+              <div class="flex gap-2">
+                <button id="new-task-btn" class="btn btn-primary">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Add Task
+                </button>
+                <button id="project-members-btn" class="btn btn-secondary">Members</button>
+              </div>
+              <div id="project-actions-admin" class="flex gap-2"></div>
+            </div>
+          </header>
+
+          <!-- Filters & View Toggles -->
+          <div class="filter-bar flex justify-between items-center">
+            <div class="flex gap-4 items-center">
+              <div class="input-group" style="margin-bottom:0">
+                <select id="filter-status" class="input" style="padding: 8px 12px; width: 140px;">
+                  <option value="">All Status</option>
+                  <option value="assigned">Assigned</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+              <div class="input-group" style="margin-bottom:0">
+                <select id="filter-priority" class="input" style="padding: 8px 12px; width: 140px;">
+                  <option value="">All Priority</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button id="list-view-btn" class="btn-secondary active" style="padding: 8px 12px;">List</button>
+              <button id="kanban-view-btn" class="btn-secondary" style="padding: 8px 12px;">Kanban</button>
+            </div>
+          </div>
+
+          <div id="project-tasks-container">
+            <div id="tasks-list-view" class="task-list"></div>
+            <div id="tasks-kanban-view" class="hidden">
+              <div id="kanban-board" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Tasks -->
+        <div id="view-my-tasks" class="view">
+          <header class="header">
+            <div class="header-info">
+              <h1>My Tasks</h1>
+              <p>Tasks currently assigned to you</p>
+            </div>
+          </header>
+          <div id="my-tasks-container"></div>
+        </div>
+
+        <!-- Team -->
+        <div id="view-team" class="view">
+          <header class="header">
+            <div class="header-info">
+              <h1>Team Management</h1>
+              <p>Approve new users and manage roles</p>
+            </div>
+          </header>
+          <div id="team-grid" class="project-grid"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div id="modal" class="card glass" style="width: 100%; max-width: 500px; padding: 32px;">
+      <div class="modal-header flex justify-between items-center" style="margin-bottom: 24px;">
+        <h3 id="modal-title" style="font-family: var(--font-display); font-size: 20px;">Modal Title</h3>
+        <button id="modal-close" class="btn-ghost" style="padding: 8px;">✕</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

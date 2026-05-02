@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #060612;
+    --surface: rgba(255, 255, 255, 0.04);
+    --surface-hover: rgba(255, 255, 255, 0.07);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.15);
+    --text: #f0f0ff;
+    --text-2: #a0a0c0;
+    --text-3: #606080;
+    --accent: #6366f1;
+    --accent-2: #8b5cf6;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --orange: #f97316;
+  }
+
+  body {
+    @apply antialiased bg-[#060612] text-[#f0f0ff] min-h-screen overflow-x-hidden;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, .brand-name {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-[rgba(15,15,30,0.6)] backdrop-blur-[20px] border border-[var(--border)] rounded-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-200;
+  }
+  .glass-card:hover {
+    @apply border-[var(--border-hover)] -translate-y-1 shadow-[0_12px_40px_rgba(0,0,0,0.5)];
+  }
+
+  .btn {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-[10px] font-medium transition-all duration-200 active:scale-95;
+  }
+  .btn-primary {
+    @apply bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] text-white shadow-[0_4px_20px_var(--accent-glow)] hover:shadow-[0_6px_24px_rgba(99,102,241,0.4)] hover:-translate-y-0.5;
+  }
+  .btn-secondary {
+    @apply bg-white/10 text-white border border-[var(--border)] hover:bg-white/20 hover:border-[var(--border-hover)];
+  }
+  .btn-danger {
+    @apply bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20;
+  }
+
+  .input {
+    @apply w-full bg-black/30 border border-[var(--border)] rounded-[10px] px-4 py-3 text-sm transition-all focus:outline-none focus:border-[var(--accent)] focus:ring-4 focus:ring-[var(--accent-glow)];
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider;
+  }
+}
+
+/* Background Animations */
+.orb {
+  @apply absolute rounded-full blur-[80px] opacity-35 animate-[float_8s_ease-in-out_infinite];
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+.grid-overlay {
+  @apply fixed inset-0 pointer-events-none;
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
