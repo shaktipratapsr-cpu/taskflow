@@ -35,8 +35,12 @@ router.post('/signup', async (req, res) => {
     res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'lax' });
     return res.status(201).json({ token, user });
   } catch (err) {
-    console.error('Signup error:', err);
-    return res.status(500).json({ error: 'Signup failed' });
+    console.error('❌ Signup error details:', {
+      message: err.message,
+      stack: err.stack,
+      code: err.code
+    });
+    return res.status(500).json({ error: 'Signup failed: ' + err.message });
   }
 });
 

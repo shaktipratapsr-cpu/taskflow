@@ -4,12 +4,22 @@ const MONGODB_URI = process.env.MONGODB_URI || ''
 let client
 
 async function getClient() {
-  if (!MONGODB_URI) throw new Error('MONGODB_URI not set')
-  if (!client) {
-    client = new MongoClient(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    await client.connect()
+  if (!MONGODB_URI) {
+    console.error('❌ MONGODB_URI is missing from environment variables!');
+    throw new Error('MONGODB_URI not set');
   }
-  return client
+  if (!client) {
+    try {
+      console.log('⏳ Connecting to MongoDB...');
+      client = new MongoClient(MONGODB_URI);
+      await client.connect();
+      console.log('✅ MongoDB connected successfully');
+    } catch (err) {
+      console.error('❌ MongoDB connection failed:', err.message);
+      throw err;
+    }
+  }
+  return client;
 }
 
 async function getDb() {
