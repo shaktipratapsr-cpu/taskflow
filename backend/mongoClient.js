@@ -25,6 +25,7 @@ async function getClient() {
 async function getDb() {
   const c = await getClient()
   const dbName = process.env.MONGODB_DB || 'TASKFLOW'
+  console.log(`📡 Using Database: [${dbName}]`);
   return c.db(dbName)
 }
 
